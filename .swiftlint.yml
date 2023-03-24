@@ -1,0 +1,384 @@
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit)
+
+included:
+  - grandrounds/grandrounds
+  - Libraries
+  - App
+
+excluded:
+  - "**/CODEGEN.swift"
+  - "**/Package.swift"
+  - "**/.build"
+  - "**/R.generated.swift"
+  - "**/generated"
+  - "**/Mocks"
+  - "**/Resources"
+  - "**/.swiftpm"
+  - "**/*.graphql.swift"
+  - "**/Tests"
+  - "**/LabsTests"
+  - "**/Strings+Generated.swift"
+  - grandrounds/generated
+  - grandrounds/grandrounds/Resources/Libraries
+  - grandrounds/grandrounds/Mocks
+  - App/IncludedHealth/Sources/IncludedHealth/IncludedHealth.swift
+  - App/IncludedHealth/Sources/IncludedHealth/generated/Strings+Generated.swift
+  - build
+  - cache
+  - Libraries/Vendor
+  - Pods
+  - App/IncludedHealth/Sources/IncludedHealth/Helpers/Libraries
+  - Libraries/Foundation/Anatomy
+  - "**/*.mlmodel"
+
+analyzer_rules:
+- capture_variable
+- explicit_self
+- typesafe_array_init
+- unused_declaration
+- unused_import
+
+disabled_rules:
+ - redundant_string_enum_value
+ - todo
+ - trailing_comma
+# - trailing_whitespace
+
+# See https://realm.github.io/SwiftLint/rule-directory.html.
+opt_in_rules:
+- accessibility_label_for_image
+- accessibility_trait_for_button
+# - anonymous_argument_in_multiline_closure
+# - array_init
+# - attributes
+# - balanced_xctest_lifecycle
+# - closure_body_length
+# - closure_end_indentation
+# - closure_spacing
+# - collection_alignment
+- comma_inheritance
+# - conditional_returns_on_newline
+- contains_over_filter_count
+- contains_over_filter_is_empty
+- contains_over_first_not_nil
+- contains_over_range_nil_comparison
+# - convenience_type
+- discarded_notification_center_observer
+- discouraged_assert
+- discouraged_none_name
+- discouraged_object_literal
+- discouraged_optional_boolean
+- empty_collection_literal
+- empty_count
+- empty_string
+# - empty_xctest_method
+# - enum_case_associated_values_count
+- expiring_todo
+# - explicit_acl
+# - explicit_enum_raw_value
+- explicit_init
+# - explicit_top_level_acl
+# - explicit_type_interface
+# - extension_access_modifier
+# - fallthrough
+- fatal_error_message
+# - file_header
+- file_name
+- file_name_no_space
+# - file_types_order
+# - first_where # omitted because it fires on Combine .first() calls.
+- flatmap_over_map_reduce
+- force_unwrapping
+# off, for now - function_default_parameter_at_end
+# - ibinspectable_in_extension
+# - identical_operands
+# - implicit_return
+# - implicitly_unwrapped_optional
+# - indentation_width
+- joined_default_parameter
+- last_where
+# - legacy_multiple
+# - legacy_objc_type
+# - let_var_whitespace
+- literal_expression_end_indentation
+# - lower_acl_than_parent
+# TODO. 1155 hits.- missing_docs
+- modifier_order
+- multiline_arguments
+# - multiline_arguments_brackets
+# NO. Too many Combine hits. - multiline_function_chains
+# - multiline_literal_brackets
+- multiline_parameters
+# - multiline_parameters_brackets
+- nimble_operator
+# - no_extension_access_modifier
+# - no_grouping_extension
+- nslocalizedstring_key
+# - nslocalizedstring_require_bundle
+- number_separator
+# - object_literal
+- operator_usage_whitespace
+# - optional_enum_case_matching
+- overridden_super_call
+# - override_in_extension
+# - pattern_matching_keywords
+# - prefer_nimble
+# - prefer_self_in_static_references
+- prefer_self_type_over_type_of_self
+- prefer_zero_over_explicit_init
+# - prefixed_toplevel_constant
+# - private_action
+# - private_outlet
+# - private_subject
+# - prohibited_interface_builder
+- prohibited_super_call
+# - quick_discouraged_call
+# - quick_discouraged_focused_test
+# - quick_discouraged_pending_test
+# - raw_value_for_camel_cased_codable_enum
+# - reduce_into
+# - redundant_nil_coalescing
+# - redundant_type_annotation
+# - required_deinit
+# - required_enum_case
+- return_value_from_void_function
+# - self_binding
+# - shorthand_optional_binding
+# - single_test_class
+- sorted_first_last
+- sorted_imports
+- static_operator
+# - strict_fileprivate
+- strong_iboutlet
+# - switch_case_on_newline
+# - test_case_accessibility
+- toggle_bool
+# - trailing_closure
+# - type_contents_order
+- unavailable_function
+- unneeded_parentheses_in_closure_argument
+- unowned_variable_capture
+- untyped_error_in_catch
+- vertical_parameter_alignment_on_call
+# NO - vertical_whitespace_between_cases
+- vertical_whitespace_closing_braces
+# - vertical_whitespace_opening_braces
+- weak_delegate
+# - xct_specific_matcher
+- yoda_condition
+
+# --------------------------------
+# Rule configurations. Adding a rule here does not turn it on, it just configures it.
+# See https://realm.github.io/SwiftLint/rule-directory.html for rule configuration parameters.
+
+colon:
+  severity: error
+
+comma:
+  severity: error
+
+comment_spacing:
+  severity: warning
+
+contains_over_filter_count:
+  severity: error
+
+contains_over_filter_is_empty:
+  severity: error
+
+contains_over_first_not_nil:
+  severity: error
+
+contains_over_range_nil_comparison:
+  severity: error
+
+control_statement:
+  severity: error
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+  warning: 20
+
+duplicate_imports:
+  severity: error
+
+empty_count:
+  severity: error
+
+empty_string:
+  severity: error
+
+explicit_init:
+  severity: error
+
+fatal_error_message:
+  severity: error
+
+file_length:
+  warning: 520
+  error: 800
+
+force_cast: warning # Give warning only for force casting
+
+force_try:
+  severity: warning # Give warning only for force try
+
+function_body_length:
+ - 150 # warning
+ - 400 # error
+
+function_parameter_count:
+ - 7 # warning
+ - 9 #error
+
+#implicitly_unwrapped_optional:
+#  mode: all_except_iboutlets
+
+line_length:
+  warning: 190
+  error: 200
+  ignores_interpolated_strings: true
+  ignores_urls: true
+  ignores_comments: true
+
+identifier_name:
+  allowed_symbols: ["_"]
+  min_length:
+    warning: 2
+    error: 2
+  max_length: 
+    warning: 90
+    error: 1000
+  excluded:
+   - dob
+   - i
+   - id
+   - ID
+   - id
+   - ios
+   - lc
+   - md
+   - ms
+   - ok
+   - on
+   - qa
+   - r
+   - ui
+   - v
+   - vc
+   - x
+   - y
+
+modifier_order:
+  severity: error
+
+large_tuple: # warn user when using 3 values in tuple, give error if there are 4
+   - 3
+   - 4
+
+multiline_arguments:
+  severity: error
+  only_enforce_after_first_closure_on_first_line: true
+
+multiline_parameters:
+  severity: error
+
+nesting:
+  type_level:
+    warning: 3
+  function_level:
+    warning: 5
+
+nslocalizedstring_key:
+  severity: error
+
+number_separator:
+  severity: error
+
+operator_usage_whitespace:
+  severity: error
+
+orphaned_doc_comment:
+  severity: warning
+
+prefer_self_type_over_type_of_self:
+  severity: error
+
+prefer_zero_over_explicit_init:
+  severity: error
+
+prohibited_super_call:
+  severity: error
+
+return_arrow_whitespace:
+  severity: error
+
+sorted_first_last:
+  severity: error
+
+sorted_imports:
+  severity: warning
+  # - TODO: Change back to 'error' once able to exclude Mockolo generated files (CODEGEN.swift)
+
+statement_position:
+  severity: error
+
+static_operator:
+  severity: error
+
+strong_iboutlet:
+  severity: error
+
+toggle_bool:
+  severity: error
+
+trailing_whitespace:
+  ignores_empty_lines: true
+  ignores_comments: true
+
+type_body_length:
+  - 351 # warning
+  - 500 # error
+
+type_name:
+  allowed_symbols: ["_"]
+  min_length: 4 # only warning
+  max_length: # warning and error
+    warning: 60
+    error: 80
+
+unavailable_condition:
+  severity: error
+
+unavailable_function:
+  severity: error
+
+unneeded_break_in_switch:
+  severity: error
+
+unused_closure_parameter:
+  severity: error
+
+vertical_parameter_alignment:
+  severity: error
+
+vertical_parameter_alignment_on_call:
+  severity: error
+
+vertical_whitespace:
+  severity: warning
+
+vertical_whitespace_closing_braces:
+  severity: warning
+
+weak_delegate:
+  severity: error
+
+custom_rules:
+  discourage_freestanding_init:
+    included: ".*\\.swift"
+    name: "Implicitly typed init()"
+    regex: " \\.init\\("
+    match_kinds: identifier
+    message: "Add the type, prefer Foo() over type-inferred .init()"
+    severity: warning

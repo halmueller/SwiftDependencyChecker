@@ -78,9 +78,9 @@ class SettingsController {
 }
 
 class Settings: Codable {
-    var specTranslationTimeInterval: TimeInterval? =  7 * 60 * 60 * 24 //default one week
-    var cpeTimeInterval: TimeInterval? = 7 * 60 * 60 * 24 //default one week
-    var vulnerabilityTimeInterval: TimeInterval? = 1 * 60 * 60 * 24 // default one day
+    var specTranslationTimeInterval: TimeInterval =  7 * 60 * 60 * 24 //default one week
+    var cpeTimeInterval: TimeInterval = 7 * 60 * 60 * 24 //default one week
+    var vulnerabilityTimeInterval: TimeInterval = 1 * 60 * 60 * 24 // default one day
     var homeFolder: URL
     var specDirectory: URL
     

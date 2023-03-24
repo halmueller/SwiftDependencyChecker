@@ -88,6 +88,7 @@ class DependencyChecker {
         let analyser = DependencyAnalyser(settings: settings)
         analyser.onlyDirectDependencies = self.onlyDirectDependencies
         
+        // FIXME: this next call takes awhile
         let libraries = analyser.analyseApp(folderPath: path)
         Logger.log(.info, "[i] Found \(libraries.count) dependencies.")
         Logger.log(.debug, "[i] Found dependencies: ")
@@ -128,11 +129,14 @@ class DependencyChecker {
         let cpeFinder = CPEFinder(settings: settings)
         
         var count = 0
+        // TODO: slow, lots of memory usage. Autorelease pool and Task().
         for analysedLibrary in analysedLibraries {
-            if let cpe = cpeFinder.findCPEForLibrary(name: analysedLibrary.name) {
-                count += 1
-                analysedLibrary.cpe = cpe
-                Logger.log(.debug, "[i] For library \(analysedLibrary.name) found cpe: \(cpe)")
+            autoreleasepool {
+                if let cpe = cpeFinder.findCPEForLibrary(name: analysedLibrary.name) {
+                    count += 1
+                    analysedLibrary.cpe = cpe
+                    Logger.log(.debug, "[i] For library \(analysedLibrary.name) found cpe: \(cpe)")
+                }
             }
         }
         Logger.log(.info, "[i] Found \(count) matching cpe values.")

@@ -44,12 +44,11 @@ class DependencyAnalyser {
     var shouldUpdate: Bool {
         Logger.log(.info, "[i] Translations last updated: \(self.translations.lastUpdated)")
         
-        if let timeInterval = self.settings.specTranslationTimeInterval {
-            // check if time since last updated is larger than the allowed timeinterval for updates
-            if self.translations.lastUpdated.timeIntervalSinceNow * -1 > timeInterval {
-                Logger.log(.info, "[i] Will update spec data")
-                return true
-            }
+        let timeInterval = self.settings.specTranslationTimeInterval
+        // check if time since last updated is larger than the allowed timeinterval for updates
+        if self.translations.lastUpdated.timeIntervalSinceNow * -1 > timeInterval {
+            Logger.log(.info, "[i] Will update spec data")
+            return true
         }
         
         Logger.log(.info, "[i] No update for spec data")
@@ -85,6 +84,7 @@ class DependencyAnalyser {
         return pathExists
     }
     
+    // TODO: This is slow, move it out of library scan so it can run alongside CVE updater
     func checkoutSpecDirectory() {
         let source = "https://github.com/CocoaPods/Specs.git"
         let directory = self.specDirectory
@@ -299,6 +299,7 @@ class DependencyAnalyser {
             Logger.log(.debug, "[*] Analysing spec sub path: \(specSubPath)")
             //find library in specs
             let enumerator = FileManager.default.enumerator(atPath: specSubPath)
+            // TODO: these are slow, should be parallelizable, autoreleeasepool or memory leak
             while let filename = enumerator?.nextObject() as? String {
                 if filename.lowercased().hasSuffix("/\(name)") {
                     Logger.log(.debug, "[i] Found file: \(filename)")
@@ -369,6 +370,7 @@ class DependencyAnalyser {
         return dictionary
     }
     
+    // TODO: parallelize this
     func analyseApp(folderPath: String) -> [Library] {
         //app.homePath
         

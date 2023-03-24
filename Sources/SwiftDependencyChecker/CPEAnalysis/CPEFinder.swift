@@ -35,6 +35,7 @@ class CPEFinder {
         self.settings = settings
         self.cpePath = self.settings.homeFolder.appendingPathComponent("official-cpe-dictionary_v2.3.xml", isDirectory: false)
         
+        // TODO: break this out, make it parallelizable
         if !cpeOnlyFromFile {
             if self.checkCPEDatafile() == false {
                 self.downloadCPEDataFile()
@@ -49,12 +50,11 @@ class CPEFinder {
     var shouldUpdate: Bool {
         Logger.log(.info, "[i] Last updated cpe dictionary: \(self.cpeDictionary.lastUpdated)")
         
-        if let timeInterval = self.settings.cpeTimeInterval {
-            // check if time since last updated is larger than the allowed timeinterval for updates
-            if self.cpeDictionary.lastUpdated.timeIntervalSinceNow * -1 > timeInterval {
-                Logger.log(.info, "[i] Will update cpe dictionary")
-                return true
-            }
+        let timeInterval = self.settings.cpeTimeInterval
+        // check if time since last updated is larger than the allowed timeinterval for updates
+        if self.cpeDictionary.lastUpdated.timeIntervalSinceNow * -1 > timeInterval {
+            Logger.log(.info, "[i] Will update cpe dictionary")
+            return true
         }
         
         Logger.log(.info, "[i] No update for cpe dictionary")
